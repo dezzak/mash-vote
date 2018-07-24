@@ -1,0 +1,22 @@
+li {
+    border: 1px #000 solid;
+    padding: 1em;
+    margin: 0.2em;
+    height: 1em;
+    text-align: center;
+    background-color: cornsilk;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+.placeholder {
+    border: 1px #333 dashed;
+    background-color: cornsilk;
+}
+
+.dragged {
+    opacity: 0.3;
+}

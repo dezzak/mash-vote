@@ -5,6 +5,7 @@
   "dependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-reorder": "^3.0.0-alpha.7",
     "react-scripts": "1.1.4"
   },
   "scripts": {
