@@ -1,5 +1,6 @@
 import React from 'react';
 import Reorder, {reorder} from 'react-reorder';
+import shuffle from 'shuffle-array';
 
 import Project from './Project';
 
@@ -21,10 +22,12 @@ class ProjectList extends React.Component {
       .then(results => {
         return results.json();
       }).then(data => {
-        const projects = data.Items.map(item => {
-          return (<li key={item.projectName}><Project name={item.projectName}/></li>);
-        });
-        this.setState({projects: projects});
+      return data.Items.map(item => {
+        return (
+          <li key={item.projectName}><Project name={item.projectName}/></li>);
+      })
+    }).then(projects => {
+        this.setState({projects: shuffle(projects)});
     });
   }
 
