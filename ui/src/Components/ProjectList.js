@@ -7,12 +7,25 @@ class ProjectList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projects: [
-        <li key='1'><Project name="Project 1"/></li>,
-        <li key='2'><Project name="Project 2"/></li>,
-        <li key='3'><Project name="Project 3"/></li>,
-      ]
+      projects: []
     }
+  }
+
+  componentDidMount() {
+    fetch('https://9dnd3ash16.execute-api.eu-west-2.amazonaws.com/dev', {
+      method: 'GET',
+      headers: {
+        'x-api-key': '1rjw7y5vgk8ghgxGj25AN1NKxhsMDwWb6RKzLdcM',
+      }
+    })
+      .then(results => {
+        return results.json();
+      }).then(data => {
+        const projects = data.Items.map(item => {
+          return (<li key={item.projectName}><Project name={item.projectName}/></li>);
+        });
+        this.setState({projects: projects});
+    });
   }
 
   render() {
