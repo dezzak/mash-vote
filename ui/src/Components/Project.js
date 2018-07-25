@@ -13,6 +13,10 @@ class Project extends React.Component {
       <div>{this.state.name}</div>
     );
   }
+
+  getName() {
+    return this.state.name;
+  }
 }
 
 export default Project;
