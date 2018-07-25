@@ -1,6 +1,7 @@
 import React from 'react';
 import Reorder, {reorder} from 'react-reorder';
 import shuffle from 'shuffle-array';
+import uuidv4 from 'uuid/v4';
 
 import Project from './Project';
 
@@ -73,8 +74,23 @@ class ProjectList extends React.Component {
   }
 
   onSubmitVote (event) {
-    const projects = this.state.projects.map(project => {return project.getName();});
-    console.log(projects)
+    const vote = {
+      votes: this.state.projects.map(project => {return project.getName();}),
+      voteId: uuidv4(),
+    };
+
+    fetch('https://9dnd3ash16.execute-api.eu-west-2.amazonaws.com/dev/vote', {
+      method: 'POST',
+      headers: {
+        'x-api-key': '1rjw7y5vgk8ghgxGj25AN1NKxhsMDwWb6RKzLdcM',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(vote),
+    }).then(results => {
+      console.log(results);
+    })
+
   }
 }
 
