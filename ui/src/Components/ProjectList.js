@@ -4,6 +4,7 @@ import shuffle from 'shuffle-array';
 import uuidv4 from 'uuid/v4';
 
 import Project from './Project';
+import Results from './Results'
 
 class ProjectList extends React.Component {
   constructor(props) {
@@ -58,6 +59,7 @@ class ProjectList extends React.Component {
         <button onClick={(e) => this.onSubmitVote(e)}>
           Vote
         </button>
+        <Results winner={this.getWinner()} totalVotes={this.getTotalVotes()} winnerVotes={this.getWinnerVotes()}/>
       </div>
     );
   }
@@ -88,9 +90,34 @@ class ProjectList extends React.Component {
       },
       body: JSON.stringify(vote),
     }).then(results => {
-      console.log(results);
+      this.refreshResults();
     })
+  }
 
+  refreshResults() {
+    fetch('https://9dnd3ash16.execute-api.eu-west-2.amazonaws.com/dev/results', {
+      method: 'GET',
+      headers: {
+        'x-api-key': '1rjw7y5vgk8ghgxGj25AN1NKxhsMDwWb6RKzLdcM',
+      }
+    })
+      .then(results => {
+        return results.json();
+      }).then(data => {
+        this.setState({results: data});
+      });
+  }
+
+  getWinner() {
+    return this.state.results ? this.state.results.ranked[0]: undefined;
+  }
+
+  getTotalVotes() {
+    return this.state.results ? this.state.results.totalVotes: undefined;
+  }
+
+  getWinnerVotes() {
+    return this.state.results ? this.state.results.winnerVotes: undefined;
   }
 }
 
